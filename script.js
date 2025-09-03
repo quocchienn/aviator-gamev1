@@ -17,8 +17,8 @@
 
 // ===== BXH API Config (tích hợp sẵn) =====
 if (typeof window !== 'undefined') {
-    window.LEADERBOARD_API = window.LEADERBOARD_API || "https://YOUR-RENDER-APP.onrender.com";
-    window.LEADERBOARD_API_KEY = window.LEADERBOARD_API_KEY || "";
+    window.LEADERBOARD_API = window.LEADERBOARD_API || "https://lukacu-sever.onrender.com/";
+    window.LEADERBOARD_API_KEY = window.LEADERBOARD_API_KEY || "https://lukacu-sever.onrender.com/";
 }
 
 
