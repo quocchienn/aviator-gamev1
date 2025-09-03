@@ -60,26 +60,6 @@
         </div>
         </div>
     </div>
-    
-        <div id="leaderboard">
-            <h3>Bảng Xếp Hạng</h3>
-            <div class="lb-tabs">
-                <button class="lb-tab active" data-metric="balance">Nhiều tiền nhất</button>
-                <button class="lb-tab" data-metric="wins">Thắng nhiều nhất</button>
-            </div>
-            <table id="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>Hạng</th>
-                        <th>Người chơi</th>
-                        <th>Số dư (VND)</th>
-                        <th>Số trận thắng</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <p id="lb-status"></p>
-        </div>
     <div id="auth-modal" class="modal">
       <div class="modal-content">
         <h2 id="auth-title">Đăng nhập</h2>
@@ -92,12 +72,6 @@
         </p>
       </div>
     </div>
-    
-    <script>
-      // 🔧 Thay URL/KEY sau khi bạn deploy server trên Render
-       window.LEADERBOARD_API = window.LEADERBOARD_API || "https://lukacu-sever.onrender.com/";
-      window.LEADERBOARD_API_KEY = window.LEADERBOARD_API_KEY || "https://lukacu-sever.onrender.com/";
-    </script>
     <script src="script.js"></script>
 </body>
 </html>

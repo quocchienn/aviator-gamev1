@@ -1,3 +1,27 @@
+// ===== Leaderboard API Config (moved from index.html) =====
+// Ưu tiên: window.* (nếu đã set từ nơi khác) -> localStorage -> giá trị mặc định
+(function(){
+  try {
+    const savedApi = localStorage.getItem('LB_API') || '';
+    const savedKey = localStorage.getItem('LB_API_KEY') || '';
+    if (typeof window !== 'undefined') {
+      window.LEADERBOARD_API = window.LEADERBOARD_API || savedApi || "https://lukacu-sever.onrender.com/";
+      window.LEADERBOARD_API_KEY = window.LEADERBOARD_API_KEY || savedKey || "https://lukacu-sever.onrender.com/";
+    }
+  } catch(e) {}
+})();
+// Bạn có thể đổi nhanh trong Console:
+// localStorage.setItem('LB_API', 'https://your-app.onrender.com');
+// localStorage.setItem('LB_API_KEY', 'your_key');
+
+
+// ===== BXH API Config (tích hợp sẵn) =====
+if (typeof window !== 'undefined') {
+    window.LEADERBOARD_API = window.LEADERBOARD_API || "https://YOUR-RENDER-APP.onrender.com";
+    window.LEADERBOARD_API_KEY = window.LEADERBOARD_API_KEY || "";
+}
+
+
 // ===== Canvas responsive, retina-safe =====
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d', { alpha: true });
