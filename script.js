@@ -5,8 +5,8 @@
     const savedApi = localStorage.getItem('LB_API') || '';
     const savedKey = localStorage.getItem('LB_API_KEY') || '';
     if (typeof window !== 'undefined') {
-      window.LEADERBOARD_API = window.LEADERBOARD_API || savedApi || "https://lukacu-sever.onrender.com/";
-      window.LEADERBOARD_API_KEY = window.LEADERBOARD_API_KEY || savedKey || "https://lukacu-sever.onrender.com/";
+      window.LEADERBOARD_API = window.LEADERBOARD_API || savedApi || "https://YOUR-RENDER-APP.onrender.com";
+      window.LEADERBOARD_API_KEY = window.LEADERBOARD_API_KEY || savedKey || "";
     }
   } catch(e) {}
 })();
