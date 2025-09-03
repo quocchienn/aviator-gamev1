@@ -439,13 +439,6 @@ function saveUserData() {
         users[currentUser].history = betHistory;
         localStorage.setItem('aviator_users', JSON.stringify(users));
     }
-    try { sendStatsToServer(); } catch (e) {}
-}');
-    if (users[currentUser]) {
-        users[currentUser].balance = calculatedBalanceAmount;
-        users[currentUser].history = betHistory;
-        localStorage.setItem('aviator_users', JSON.stringify(users));
-    }
 }
 
 // Cập nhật lại bảng lịch sử cược khi đăng nhập
@@ -463,23 +456,32 @@ function updateBetHistoryTable() {
     });
 }
 
-// Hook lưu dữ liệu sau các hành động
-const _oldUpdateBetHistory = updateBetHistory;
-updateBetHistory = function(betAmount, multiplier, result) {
-    _oldUpdateBetHistory.call(this, betAmount, multiplier, result);
-    saveUserData();
-};
+// Hook lưu dữ liệu sau các hành động (an toàn nếu hàm chưa có)
+(function(){
+    // updateBetHistory
+    const hasUpdateBetHistory = (typeof window.updateBetHistory === 'function');
+    const _oldUpdateBetHistory = hasUpdateBetHistory ? window.updateBetHistory : function(){ /* no-op */ };
+    window.updateBetHistory = function(betAmount, multiplier, result){
+        try { _oldUpdateBetHistory.call(this, betAmount, multiplier, result); } catch(e){ /* ignore */ }
+        try { saveUserData(); } catch(e){ /* ignore */ }
+    };
 
-const _oldCashOut = cashOut;
-cashOut = function() {
-    _oldCashOut.call(this);
-    saveUserData();
-};
-const _oldPlaceBet = placeBet;
-placeBet = function() {
-    _oldPlaceBet.call(this);
-    saveUserData();
-};
+    // cashOut
+    const hasCashOut = (typeof window.cashOut === 'function');
+    const _oldCashOut = hasCashOut ? window.cashOut : function(){ /* no-op */ };
+    window.cashOut = function(){
+        try { _oldCashOut.call(this); } catch(e){ /* ignore */ }
+        try { saveUserData(); } catch(e){ /* ignore */ }
+    };
+
+    // placeBet
+    const hasPlaceBet = (typeof window.placeBet === 'function');
+    const _oldPlaceBet = hasPlaceBet ? window.placeBet : function(){ /* no-op */ };
+    window.placeBet = function(){
+        try { _oldPlaceBet.call(this); } catch(e){ /* ignore */ }
+        try { saveUserData(); } catch(e){ /* ignore */ }
+    };
+})();
 
 // Hiện modal khi chưa đăng nhập
 window.addEventListener('DOMContentLoaded', () => {
@@ -761,100 +763,3 @@ if (vietqrDepositBtn && vietqrAmountInput && vietqrInfo && vietqrContent && viet
         setupFreeWithdraw();
     }
 })();
-
-// ===== Leaderboard Client (Render server) =====
-const LB_API_BASE = (typeof window !== 'undefined' && window.LEADERBOARD_API) ? window.LEADERBOARD_API : '';
-const LB_API_KEY  = (typeof window !== 'undefined' && window.LEADERBOARD_API_KEY) ? window.LEADERBOARD_API_KEY : '';
-
-function lbStatus(msg) {
-    const el = document.getElementById('lb-status');
-    if (el) el.textContent = msg || '';
-}
-
-function sanitize(text) {
-    return String(text || 'Ẩn danh')
-        .replace(/[&<>"'`]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[s]));
-}
-
-function countWinsFromHistory(history) {
-    try {
-        return (history || []).reduce((acc, it) => acc + ((it.result || '').startsWith('Thắng') ? 1 : 0), 0);
-    } catch(e) { return 0; }
-}
-
-function collectStatsForLB() {
-    return {
-        username: currentUser || 'guest',
-        balance: Number(calculatedBalanceAmount || 0),
-        wins: countWinsFromHistory(betHistory)
-    };
-}
-
-async function sendStatsToServer() {
-    if (!LB_API_BASE) return;
-    try {
-        const res = await fetch(`${LB_API_BASE}/update`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                ...(LB_API_KEY ? {'x-api-key': LB_API_KEY} : {})
-            },
-            body: JSON.stringify(collectStatsForLB())
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        lbStatus('Đã cập nhật lên BXH.');
-    } catch (e) {
-        lbStatus('Không kết nối được máy chủ BXH.');
-        // console.warn('LB update error:', e);
-    }
-}
-
-async function fetchLeaderboard(metric = 'balance') {
-    if (!LB_API_BASE) return;
-    try {
-        const res = await fetch(`${LB_API_BASE}/leaderboard?metric=${encodeURIComponent(metric)}`, {
-            headers: {
-                ...(LB_API_KEY ? {'x-api-key': LB_API_KEY} : {})
-            }
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const list = await res.json();
-        renderLeaderboard(list);
-        lbStatus('');
-    } catch (e) {
-        lbStatus('Không tải được BXH.');
-        // console.warn('LB fetch error:', e);
-    }
-}
-
-function renderLeaderboard(list) {
-    const tbody = document.querySelector('#leaderboard-table tbody');
-    if (!tbody) return;
-    tbody.innerHTML = (list || []).slice(0, 50).map((u, i) => `
-        <tr>
-            <td>${i + 1}</td>
-            <td>${sanitize(u.username)}</td>
-            <td>${Number(u.balance || 0).toLocaleString('vi-VN')}</td>
-            <td>${Number(u.wins || 0)}</td>
-        </tr>
-    `).join('');
-}
-
-function initLeaderboardUI() {
-    const tabs = document.querySelectorAll('.lb-tab');
-    tabs.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabs.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const metric = btn.getAttribute('data-metric') || 'balance';
-            fetchLeaderboard(metric);
-        });
-    });
-    // Tải bảng mặc định
-    fetchLeaderboard('balance');
-}
-
-// Auto init when DOM ready (sau khi modal render)
-document.addEventListener('DOMContentLoaded', () => {
-    initLeaderboardUI();
-});
