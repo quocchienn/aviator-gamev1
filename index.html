@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trò Chơi Aviator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div id="last-counters"></div>
+        </div>
+        <div id="mid-wrapper">
+            <div id="balance">
+                SỐ DƯ: <span id="balance-amount">3,000,000 VND</span>
+            </div>
+            <div id="counterWrapper">
+                <div id="bg-image"></div>
+                <canvas id="canvas"></canvas>
+                <div id="counter">1.00x</div>
+                <div id="bet-timer">
+                    <div id="bet-timer-bar"></div>
+                </div>
+            </div>
+        </div>
+        <div id="bottom-wrapper">
+            <div id="input-wrapper">
+                <input type="text" id="bet-input" value="2.500" placeholder="Nhập số tiền cược (VND)">
+                <button id="increase-bet">+</button>
+                <button id="bet-half">1/2</button> <!-- Nút cược nửa số dư -->
+                <button id="bet-all">All</button>
+            </div>
+            <button id="bet-button">Đặt Cược</button>
+        </div>
+        <div id="message-button">
+            <p id="message">Chờ vòng tiếp theo</p>
+        </div>
+        <div id="bet-history">
+            <h3>Lịch Sử Cược</h3>
+            <table id="bet-history-table">
+                <thead>
+                    <tr>
+                        <th>Thời Gian</th>
+                        <th>Số Tiền Cược</th>
+                        <th>Hệ Số</th>
+                        <th>Kết Quả</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div id="bank-wrapper">
+            <h3>Nhận hỗ trợ miễn phí</h3>
+            <button id="free-deposit-btn" class="nice-btn">Nhận miễn phí 100,000 VND</button>
+            <button id="free-withdraw-btn" class="nice-btn">Nhận 100,000 VND hỗ trợ</button>
+            <div id="withdraw-timer" style="display:none;margin-top:10px;font-weight:bold;color:#ff9800;"></div>
+            <p id="free-bank-message"></p>
+        </div>
+        </div>
+    </div>
+    
+        <div id="leaderboard">
+            <h3>Bảng Xếp Hạng</h3>
+            <div class="lb-tabs">
+                <button class="lb-tab active" data-metric="balance">Nhiều tiền nhất</button>
+                <button class="lb-tab" data-metric="wins">Thắng nhiều nhất</button>
+            </div>
+            <table id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Hạng</th>
+                        <th>Người chơi</th>
+                        <th>Số dư (VND)</th>
+                        <th>Số trận thắng</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <p id="lb-status"></p>
+        </div>
+    <div id="auth-modal" class="modal">
+      <div class="modal-content">
+        <h2 id="auth-title">Đăng nhập</h2>
+        <input type="text" id="auth-username" placeholder="Tên đăng nhập">
+        <input type="password" id="auth-password" placeholder="Mật khẩu">
+        <button id="auth-submit">Đăng nhập</button>
+        <p id="auth-message"></p>
+        <p>
+          <span id="toggle-auth">Chưa có tài khoản? Đăng ký</span>
+        </p>
+      </div>
+    </div>
+    
+    <script>
+      // 🔧 Thay URL/KEY sau khi bạn deploy server trên Render
+      window.LEADERBOARD_API = window.LEADERBOARD_API || "https://YOUR-RENDER-APP.onrender.com";
+      window.LEADERBOARD_API_KEY = window.LEADERBOARD_API_KEY || "";
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

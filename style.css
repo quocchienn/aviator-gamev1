@@ -1,0 +1,625 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    font-family: 'Exo 2', sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    color: #ffffff;
+}
+
+#wrapper {
+    width: 100%;
+    max-width: 900px;
+    /* vừa phải, không quá to */
+    margin: 36px auto 0 auto;
+    padding: 32px 0 60px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-shadow: 0 8px 48px #000a;
+    border-radius: 32px;
+    background: rgba(34, 36, 42, 0.98);
+}
+
+#header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#last-counters {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    scrollbar-width: thin;
+}
+
+#last-counters p {
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 2px solid;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.blueBorder {
+    color: #34b4ff;
+    border-color: #34b4ff;
+    background: rgba(52, 180, 255, 0.1);
+}
+
+.purpleBorder {
+    color: #9142f8;
+    border-color: #9142f8;
+    background: rgba(145, 62, 248, 0.1);
+}
+
+.burgundyBorder {
+    color: #c017b4;
+    border-color: #c017b4;
+    background: rgba(192, 23, 180, 0.1);
+}
+
+#mid-wrapper {
+    width: 100%;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+#balance {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #30fcbe;
+    margin-bottom: 15px;
+}
+
+#balance-amount {
+    padding: 8px 16px;
+    border: 2px solid #30fcbe;
+    border-radius: 20px;
+    background: rgba(48, 252, 190, 0.1);
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+#counterWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 850px;
+    height: min(60vh, 520px);
+    /* 60% chiều cao màn hình, tối đa 520px */
+    border-radius: 28px;
+    overflow: hidden;
+    background: url('img/aviator.spribe.background copy.jpeg') center center/cover no-repeat, #23242a;
+    box-shadow: 0 6px 32px #0007;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bg-image {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url('img/aviator-re-bg.png') center/cover no-repeat;
+    animation: rotation 10s infinite linear;
+    z-index: 1;
+}
+
+#canvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+#counter {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 48px;
+    font-weight: 900;
+    color: #fb024c;
+    text-shadow: 0 0 10px rgba(251, 2, 76, 0.5);
+    z-index: 10;
+}
+
+#bet-timer {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    z-index: 10;
+}
+
+#bet-timer-bar {
+    width: 100%;
+    height: 100%;
+    background: #fb024c;
+    border-radius: 5px;
+    transition: width 0.1s linear;
+}
+
+#bottom-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    /* tăng từ 500px lên 800px */
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+#input-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#bet-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 3px solid #ffffff;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    outline: none;
+}
+
+#bet-input::placeholder {
+    color: #aaaaaa;
+}
+
+#increase-bet {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 24px;
+    background: #30fcbe;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#increase-bet:hover {
+    background: #28d8a3;
+}
+
+#auto-bet {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+#bet-button {
+    padding: 12px 40px;
+    border: none;
+    border-radius: 24px;
+    background: #fb024c;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#bet-button:hover {
+    background: #d40241;
+}
+
+#message-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#message {
+    color: #fb024c;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#bet-history {
+    width: 100%;
+    max-width: 800px;
+    /* tăng từ 500px lên 800px */
+    margin-top: 20px;
+}
+
+#bet-history h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #30fcbe;
+}
+
+#bet-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+#bet-history-table th,
+#bet-history-table td {
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#bet-history-table th {
+    font-weight: 700;
+    color: #30fcbe;
+}
+
+
+/* Modal đăng nhập/đăng ký */
+
+.modal {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #23242a;
+    padding: 32px 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 32px #000a;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 320px;
+}
+
+.modal-content input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+.modal-content button {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: #34b4ff;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#toggle-auth {
+    color: #30fcbe;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+#auth-message {
+    color: #ff6b6b;
+    min-height: 18px;
+    font-size: 14px;
+}
+
+@keyframes rotation {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+#bet-all {
+    padding: 8px 16px;
+    margin-left: 6px;
+    border-radius: 8px;
+    border: none;
+    background: #ffb300;
+    color: #222;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#bet-all:hover {
+    background: #ffd54f;
+}
+
+#bank-wrapper {
+    margin: 32px auto 0 auto;
+    padding: 24px 16px;
+    background: #23242a;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 0 4px 24px #0003;
+}
+
+#bank-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    justify-content: center;
+}
+
+#bank-actions input {
+    width: 120px;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+}
+
+#bank-actions button {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    background: #34b4ff;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#bank-actions button:hover {
+    background: #1e88e5;
+}
+
+#bank-message {
+    min-height: 18px;
+    font-size: 14px;
+    color: #ffd54f;
+}
+
+#auto-cashout {
+    width: 110px;
+    margin-left: 8px;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+}
+
+#bet-half,
+#stop-auto {
+    padding: 8px 14px;
+    margin-left: 6px;
+    border-radius: 8px;
+    border: none;
+    background: #ff6b6b;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#bet-half {
+    background: #ffd54f;
+    color: #222;
+}
+
+#bet-half:hover {
+    background: #ffe082;
+}
+
+#stop-auto:hover {
+    background: #ff1744;
+}
+
+.nice-btn {
+    padding: 12px 24px;
+    margin: 8px 6px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(90deg, #ff9800 0%, #ffb300 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px #0002;
+}
+
+.nice-btn:disabled {
+    background: #bbb;
+    color: #fff;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nice-btn:hover:not(:disabled) {
+    background: linear-gradient(90deg, #ffb300 0%, #ff9800 100%);
+    transform: scale(1.05);
+}
+
+#free-bank-message {
+    min-height: 22px;
+    font-size: 15px;
+    color: #ffd54f;
+    margin-top: 10px;
+}
+
+#withdraw-timer {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+
+/* ========== RESPONSIVE ========== */
+
+
+/* Tablet */
+
+@media (max-width: 1024px) {
+    #wrapper {
+        padding: 20px 0 40px;
+        border-radius: 20px;
+    }
+    #counterWrapper {
+        height: min(62vh, 500px);
+    }
+    #counter {
+        font-size: 40px;
+        top: 12px;
+    }
+    #bet-timer {
+        width: 160px;
+    }
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    #bottom-wrapper {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    #input-wrapper {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    #bet-input {
+        flex: 1 1 100%;
+        font-size: 15px;
+        padding: 10px 14px;
+    }
+    #increase-bet,
+    #bet-half,
+    #bet-all {
+        flex: 1 1 calc(33.33% - 6px);
+        min-width: 80px;
+        padding: 10px 0;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+    #bet-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+    }
+    #bet-history-table th,
+    #bet-history-table td {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
+
+
+/* Màn rất nhỏ */
+
+@media (max-width: 360px) {
+    #counter {
+        font-size: 32px;
+    }
+    #bet-timer {
+        width: 140px;
+    }
+}
+
+/* ===== Leaderboard ===== */
+#leaderboard {
+    width: 100%;
+    max-width: 800px;
+    margin: 28px auto 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 24px #0003;
+}
+
+#leaderboard h3 {
+    margin: 0 0 10px 0;
+    color: #30fcbe;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.lb-tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+.lb-tab {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 2px solid #444;
+    background: #23242a;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform .15s ease, background .2s ease, border-color .2s ease;
+}
+.lb-tab:hover { transform: translateY(-1px); }
+.lb-tab.active {
+    border-color: #30fcbe;
+    background: rgba(48,252,190,0.12);
+}
+
+#leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#leaderboard-table th, #leaderboard-table td {
+    padding: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+#leaderboard-table th { color: #30fcbe; text-align: left; }
+#leaderboard-table tbody tr:nth-child(odd) { background: rgba(255,255,255,0.03); }
+#leaderboard-table tbody tr:hover { background: rgba(255,255,255,0.06); }
+
+#lb-status { margin-top: 8px; font-size: 14px; color: #ffd54f; min-height: 18px; }
+@media (max-width: 768px) {
+    #leaderboard { padding: 12px; }
+    #leaderboard-table th, #leaderboard-table td { font-size: 13px; }
+}
